@@ -280,7 +280,7 @@ h3 {
 
 .skills-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
     gap: var(--espacamento-grande);
 }
 
@@ -294,11 +294,10 @@ h3 {
 }
 
 .skill-group li {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: baseline;
-    justify-content: space-between;
-    gap: var(--espacamento-minimo) var(--espacamento-pequeno);
+    gap: var(--espacamento-pequeno);
 
     margin-bottom: 6px;
 }
@@ -306,6 +305,8 @@ h3 {
 .skill-level {
     color: var(--cor-link);
     font-size: 0.9rem;
+    white-space: nowrap;
+    text-align: right;
 }
 
 
