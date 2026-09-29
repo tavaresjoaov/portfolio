@@ -1,14 +1,53 @@
 /* =========================
-   1. Configurações gerais
+   1. Variáveis e configurações
 ========================= */
+
+:root {
+    /* Cores */
+    --cor-fundo: #08103b;
+    --cor-cartao: #111c50;
+    --cor-borda: #344477;
+    --cor-destaque: #5789ff;
+    --cor-link: #8bd3ff;
+    --cor-hover: #344b91;
+    --cor-nav: #26366f;
+    --cor-status: #2563eb;
+    --cor-texto: #ffffff;
+
+    /* Espaçamentos */
+    --espacamento-minimo: 4px;
+    --espacamento-pequeno: 8px;
+    --espacamento-medio: 16px;
+    --espacamento-grande: 24px;
+    --espacamento-apresentacao: 28px;
+
+    /* Bordas */
+    --raio-pequeno: 4px;
+    --raio-padrao: 8px;
+    --raio-nav: 10px;
+
+    /* Efeitos */
+    --duracao-transicao: 0.2s;
+    --sombra-menu: 0 4px 10px rgba(0, 0, 0, 0.25);
+    --sombra-cartao: 0 8px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Configuração global do modelo de caixa */
 
 * {
     box-sizing: border-box;
 }
 
+
+/* =========================
+   2. Estilos gerais e títulos
+========================= */
+
 body {
-    background-color: #08103b;
-    color: #FFFFFF;
+    margin: 0;
+
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto);
     font-family: Arial, sans-serif;
     line-height: 1.5;
 }
@@ -17,23 +56,26 @@ p {
     font-size: 16px;
 }
 
-
-/* =========================
-   2. Títulos
-========================= */
-
 h1 {
     font-size: 48px;
 }
 
 h2 {
-    margin-bottom: 16px;
     font-size: 36px;
 }
 
 h3 {
-    margin-bottom: 16px;
+    margin-bottom: var(--espacamento-medio);
     font-size: 24px;
+}
+
+.section {
+    margin-block: 64px;
+    padding-inline: clamp(20px, 4vw, 56px);
+}
+
+.section h2 {
+    margin: 0 0 var(--espacamento-grande);
 }
 
 
@@ -42,17 +84,19 @@ h3 {
 ========================= */
 
 .site-header {
-    padding: 24px 16px;
+    padding: var(--espacamento-grande) var(--espacamento-medio);
 }
 
 .hero-intro {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 28px;
+    gap: var(--espacamento-apresentacao);
 
     max-width: 900px;
     margin: 0 auto;
+
+    animation: aparecer 0.6s ease-out both;
 }
 
 .profile-image {
@@ -60,6 +104,7 @@ h3 {
     width: 250px;
     max-width: 100%;
     aspect-ratio: 1 / 1;
+
     object-fit: cover;
     border-radius: 50%;
 }
@@ -70,11 +115,26 @@ h3 {
 }
 
 .hero-text h1 {
-    margin: 0 0 8px;
+    margin: 0 0 var(--espacamento-pequeno);
 }
 
 .hero-text p {
     margin: 0;
+}
+
+
+/* Animação de entrada da apresentação */
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 
@@ -85,58 +145,92 @@ h3 {
 .site-header nav {
     width: fit-content;
     max-width: 100%;
-    margin: 24px auto 0;
+    margin: var(--espacamento-grande) auto 0;
 }
 
 .site-header nav ul {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 8px;
+    gap: var(--espacamento-pequeno);
 
     margin: 0;
-    padding: 8px;
+    padding: var(--espacamento-pequeno);
+
     list-style: none;
-    border-radius: 10px;
+    border-radius: var(--raio-nav);
 }
 
 .site-header nav a {
     display: inline-block;
-    padding: 8px 12px;
+    padding: var(--espacamento-pequeno) 12px;
 
-    background-color: #26366f;
-    border: 1px solid #5789ff;
+    background-color: var(--cor-nav);
     border-radius: 6px;
 
-    color: #8bd3ff;
+    color: var(--cor-link);
     text-decoration: none;
+
+    transition:
+        transform var(--duracao-transicao) ease,
+        background-color var(--duracao-transicao) ease,
+        color var(--duracao-transicao) ease,
+        box-shadow var(--duracao-transicao) ease;
 }
 
 .site-header nav a:hover {
-    background-color: #344b91;
-    color: #FFFFFF;
+    background-color: var(--cor-hover);
+    color: var(--cor-texto);
+    transform: translateY(-3px);
+    box-shadow: var(--sombra-menu);
 }
 
 
 /* =========================
-   5. Cartões de projetos
+   5. Cartões compartilhados
+========================= */
+
+/* Propriedades visuais comuns aos cartões de projetos
+   e aos grupos de habilidades */
+
+.project-card,
+.skill-group {
+    padding: var(--espacamento-medio);
+
+    background-color: var(--cor-cartao);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-padrao);
+}
+
+
+/* =========================
+   6. Cartões de projetos
 ========================= */
 
 .project-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, 280px), 1fr)
+    );
+    gap: var(--espacamento-grande);
 }
 
 .project-card {
     position: relative;
     min-width: 0;
     min-height: 150px;
-    padding: 16px;
 
-    background-color: #111c50;
-    border: 1px solid #344477;
-    border-radius: 8px;
+    transition:
+        transform var(--duracao-transicao) ease,
+        box-shadow var(--duracao-transicao) ease,
+        border-color var(--duracao-transicao) ease;
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-cartao);
+    border-color: var(--cor-destaque);
 }
 
 .project-status {
@@ -144,11 +238,11 @@ h3 {
     top: 10px;
     right: 10px;
 
-    padding: 4px 8px;
-    background-color: #2563eb;
-    border-radius: 4px;
+    padding: var(--espacamento-minimo) var(--espacamento-pequeno);
+    background-color: var(--cor-status);
+    border-radius: var(--raio-pequeno);
 
-    color: #FFFFFF;
+    color: var(--cor-texto);
     font-size: 12px;
 }
 
@@ -164,42 +258,34 @@ h3 {
     margin: 12px auto;
 
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: var(--raio-padrao);
 }
 
 .project-tags span {
     display: inline-block;
-    margin: 4px 4px 0 0;
-    padding: 4px 8px;
+    margin: var(--espacamento-minimo) var(--espacamento-minimo) 0 0;
+    padding: var(--espacamento-minimo) var(--espacamento-pequeno);
 
-    background-color: #26366f;
-    border: 1px solid #5789ff;
-    border-radius: 4px;
+    background-color: var(--cor-nav);
+    border: 1px solid var(--cor-destaque);
+    border-radius: var(--raio-pequeno);
 
     font-size: 13px;
 }
 
 
 /* =========================
-   6. Habilidades
+   7. Habilidades
 ========================= */
 
 .skills-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 16px;
-}
-
-.skill-group {
-    padding: 16px;
-
-    background-color: #111c50;
-    border: 1px solid #344477;
-    border-radius: 8px;
+    gap: var(--espacamento-grande);
 }
 
 .skill-group h3 {
-    margin: 0 0 8px;
+    margin: 0 0 var(--espacamento-medio);
 }
 
 .skill-group ul {
@@ -208,35 +294,123 @@ h3 {
 }
 
 .skill-group li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--espacamento-minimo) var(--espacamento-pequeno);
+
     margin-bottom: 6px;
 }
 
+.skill-level {
+    color: var(--cor-link);
+    font-size: 0.9rem;
+}
+
 
 /* =========================
-   7. Formulários
+   8. Contato
 ========================= */
 
-.form-group {
+#contato form {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+}
+
+#contato fieldset {
+    padding: var(--espacamento-apresentacao);
+
+    background-color: var(--cor-cartao);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-nav);
+    box-shadow: var(--sombra-cartao);
+}
+
+#contato legend {
+    padding: 0 var(--espacamento-pequeno);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+#contato .form-group {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
+    gap: var(--espacamento-pequeno);
+
+    margin-bottom: var(--espacamento-medio);
 }
 
-.form-group input,
-.form-group textarea {
+#contato label {
+    color: var(--cor-texto);
+    font-weight: 500;
+}
+
+#contato input,
+#contato textarea {
     width: 100%;
-    padding: 8px;
+    padding: 12px var(--espacamento-medio);
+
+    background-color: var(--cor-fundo);
+    border: 1px solid var(--cor-borda);
+    border-radius: var(--raio-padrao);
+
+    color: var(--cor-texto);
+    font: inherit;
+
+    transition: border-color var(--duracao-transicao);
 }
 
-input:focus,
-textarea:focus {
-    outline: 2px solid #2563eb;
+#contato textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+#contato input:focus-visible,
+#contato textarea:focus-visible {
+    outline: 2px solid var(--cor-destaque);
+    outline-offset: 2px;
+    border-color: var(--cor-destaque);
+}
+
+#contato button {
+    padding: 12px var(--espacamento-grande);
+
+    background-color: var(--cor-status);
+    border: none;
+    border-radius: var(--raio-padrao);
+
+    color: var(--cor-texto);
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color var(--duracao-transicao),
+        transform var(--duracao-transicao);
+}
+
+#contato button:hover {
+    background-color: var(--cor-hover);
+    transform: translateY(-2px);
 }
 
 
 /* =========================
-   8. Responsividade
+   9. Foco e acessibilidade
+========================= */
+
+.site-header nav a:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--cor-texto);
+    outline-offset: 3px;
+}
+
+
+/* =========================
+   10. Responsividade
 ========================= */
 
 @media (max-width: 600px) {
@@ -266,11 +440,34 @@ textarea:focus {
         text-align: center;
     }
 
-    .project-list {
-        grid-template-columns: 1fr;
-    }
-
     .project-image {
         max-width: 100%;
+    }
+
+    #contato fieldset {
+        padding: var(--espacamento-medio);
+    }
+}
+
+
+/* =========================
+   11. Preferência por movimento reduzido
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-intro {
+        animation: none;
+    }
+
+    .site-header nav a,
+    .project-card,
+    #contato button {
+        transition: none;
+    }
+
+    .site-header nav a:hover,
+    .project-card:hover,
+    #contato button:hover {
+        transform: none;
     }
 }
